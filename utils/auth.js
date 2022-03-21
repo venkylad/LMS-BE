@@ -16,6 +16,7 @@ export const hashPassword = (password) => {
   });
 };
 
-export const comparePassword = (password, hashed) => {
-  return bcrypt.compare(password, hashed);
+export const comparePassword = async (password, hashed) => {
+  const compare = await bcrypt.compare(password, hashed);
+  return compare; // returns boolean
 };
