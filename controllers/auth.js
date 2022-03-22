@@ -47,6 +47,7 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    console.log(req, "COOKIES");
     //find user exists in DB or not
     const user = await User.findOne({ email }).exec();
     if (!user) {
@@ -88,6 +89,16 @@ export const logout = async (req, res) => {
   try {
     res.clearCookie("token");
     return res.json({ message: "Successfully Logged Out" });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const currentUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select("-password").exec();
+    console.log("currUser", user);
+    return res.json(user);
   } catch (err) {
     console.log(err);
   }
